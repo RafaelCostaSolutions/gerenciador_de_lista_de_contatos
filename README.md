@@ -9,173 +9,172 @@ Remover contatos.
 Visualizar a lista de contatos.
 Armazenar dados em um arquivo para persistência.
 
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-class Contact
+class Contato
 {
-    public string Name { get; set; }
-    public string Phone { get; set; }
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
     public string Email { get; set; }
 
     public override string ToString()
     {
-        return $"{Name}, {Phone}, {Email}";
+        return $"{Nome}, {Telefone}, {Email}";
     }
 }
 
 class Program
 {
-    static List<Contact> contacts = new List<Contact>();
-    static string filePath = "contacts.txt";
+    static List<Contato> contatos = new List<Contato>();
+    static string caminhoArquivo = "contatos.txt";
 
     static void Main()
     {
-        LoadContacts();
+        CarregarContatos();
         while (true)
         {
-            Console.WriteLine("\nContact Manager");
-            Console.WriteLine("1. Add Contact");
-            Console.WriteLine("2. Edit Contact");
-            Console.WriteLine("3. Remove Contact");
-            Console.WriteLine("4. View Contacts");
-            Console.WriteLine("5. Exit");
-            Console.Write("Choose an option: ");
-            var choice = Console.ReadLine();
+            Console.WriteLine("\nGerenciador de Contatos");
+            Console.WriteLine("1. Adicionar Contato");
+            Console.WriteLine("2. Editar Contato");
+            Console.WriteLine("3. Remover Contato");
+            Console.WriteLine("4. Visualizar Contatos");
+            Console.WriteLine("5. Sair");
+            Console.Write("Escolha uma opção: ");
+            var escolha = Console.ReadLine();
 
-            switch (choice)
+            switch (escolha)
             {
                 case "1":
-                    AddContact();
+                    AdicionarContato();
                     break;
                 case "2":
-                    EditContact();
+                    EditarContato();
                     break;
                 case "3":
-                    RemoveContact();
+                    RemoverContato();
                     break;
                 case "4":
-                    ViewContacts();
+                    VisualizarContatos();
                     break;
                 case "5":
-                    SaveContacts();
+                    SalvarContatos();
                     return;
                 default:
-                    Console.WriteLine("Invalid option, try again.");
+                    Console.WriteLine("Opção inválida, tente novamente.");
                     break;
             }
         }
     }
 
-    static void AddContact()
+    static void AdicionarContato()
     {
-        var contact = new Contact();
+        var contato = new Contato();
 
-        Console.Write("Enter name: ");
-        contact.Name = Console.ReadLine();
+        Console.Write("Digite o nome: ");
+        contato.Nome = Console.ReadLine();
 
-        Console.Write("Enter phone: ");
-        contact.Phone = Console.ReadLine();
+        Console.Write("Digite o telefone: ");
+        contato.Telefone = Console.ReadLine();
 
-        Console.Write("Enter email: ");
-        contact.Email = Console.ReadLine();
+        Console.Write("Digite o email: ");
+        contato.Email = Console.ReadLine();
 
-        contacts.Add(contact);
-        Console.WriteLine("Contact added successfully.");
+        contatos.Add(contato);
+        Console.WriteLine("Contato adicionado com sucesso.");
     }
 
-    static void EditContact()
+    static void EditarContato()
     {
-        Console.Write("Enter the name of the contact to edit: ");
-        var name = Console.ReadLine();
-        var contact = contacts.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        Console.Write("Digite o nome do contato a editar: ");
+        var nome = Console.ReadLine();
+        var contato = contatos.FirstOrDefault(c => c.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
 
-        if (contact != null)
+        if (contato != null)
         {
-            Console.Write("Enter new name (leave blank to keep current): ");
-            var newName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(newName))
+            Console.Write("Digite o novo nome (deixe em branco para manter o atual): ");
+            var novoNome = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(novoNome))
             {
-                contact.Name = newName;
+                contato.Nome = novoNome;
             }
 
-            Console.Write("Enter new phone (leave blank to keep current): ");
-            var newPhone = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(newPhone))
+            Console.Write("Digite o novo telefone (deixe em branco para manter o atual): ");
+            var novoTelefone = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(novoTelefone))
             {
-                contact.Phone = newPhone;
+                contato.Telefone = novoTelefone;
             }
 
-            Console.Write("Enter new email (leave blank to keep current): ");
-            var newEmail = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(newEmail))
+            Console.Write("Digite o novo email (deixe em branco para manter o atual): ");
+            var novoEmail = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(novoEmail))
             {
-                contact.Email = newEmail;
+                contato.Email = novoEmail;
             }
 
-            Console.WriteLine("Contact updated successfully.");
+            Console.WriteLine("Contato atualizado com sucesso.");
         }
         else
         {
-            Console.WriteLine("Contact not found.");
+            Console.WriteLine("Contato não encontrado.");
         }
     }
 
-    static void RemoveContact()
+    static void RemoverContato()
     {
-        Console.Write("Enter the name of the contact to remove: ");
-        var name = Console.ReadLine();
-        var contact = contacts.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        Console.Write("Digite o nome do contato a remover: ");
+        var nome = Console.ReadLine();
+        var contato = contatos.FirstOrDefault(c => c.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
 
-        if (contact != null)
+        if (contato != null)
         {
-            contacts.Remove(contact);
-            Console.WriteLine("Contact removed successfully.");
+            contatos.Remove(contato);
+            Console.WriteLine("Contato removido com sucesso.");
         }
         else
         {
-            Console.WriteLine("Contact not found.");
+            Console.WriteLine("Contato não encontrado.");
         }
     }
 
-    static void ViewContacts()
+    static void VisualizarContatos()
     {
-        if (contacts.Any())
+        if (contatos.Any())
         {
-            Console.WriteLine("\nContacts:");
-            foreach (var contact in contacts)
+            Console.WriteLine("\nContatos:");
+            foreach (var contato in contatos)
             {
-                Console.WriteLine(contact);
+                Console.WriteLine(contato);
             }
         }
         else
         {
-            Console.WriteLine("No contacts found.");
+            Console.WriteLine("Nenhum contato encontrado.");
         }
     }
 
-    static void LoadContacts()
+    static void CarregarContatos()
     {
-        if (File.Exists(filePath))
+        if (File.Exists(caminhoArquivo))
         {
-            var lines = File.ReadAllLines(filePath);
-            foreach (var line in lines)
+            var linhas = File.ReadAllLines(caminhoArquivo);
+            foreach (var linha in linhas)
             {
-                var parts = line.Split(',');
-                if (parts.Length == 3)
+                var partes = linha.Split(',');
+                if (partes.Length == 3)
                 {
-                    contacts.Add(new Contact { Name = parts[0].Trim(), Phone = parts[1].Trim(), Email = parts[2].Trim() });
+                    contatos.Add(new Contato { Nome = partes[0].Trim(), Telefone = partes[1].Trim(), Email = partes[2].Trim() });
                 }
             }
         }
     }
 
-    static void SaveContacts()
+    static void SalvarContatos()
     {
-        var lines = contacts.Select(c => $"{c.Name}, {c.Phone}, {c.Email}");
-        File.WriteAllLines(filePath, lines);
+        var linhas = contatos.Select(c => $"{c.Nome}, {c.Telefone}, {c.Email}");
+        File.WriteAllLines(caminhoArquivo, linhas);
     }
 }
